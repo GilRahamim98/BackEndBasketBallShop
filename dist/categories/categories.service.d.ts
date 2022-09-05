@@ -6,5 +6,5 @@ export declare class CategoriesService {
     private readonly itemsService;
     constructor(categoryRepository: Repository<Category>, itemsService: ItemsService);
     getCategories(): Promise<Category[]>;
-    getCategory(_id: number): Promise<import("../items/entities/items.entity").Items[]>;
+    getCategory(_id: number): any;
 }

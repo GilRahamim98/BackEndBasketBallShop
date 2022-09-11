@@ -18,9 +18,13 @@ const typeorm_1 = require("@nestjs/typeorm");
 const typeorm_2 = require("typeorm");
 const order_entity_1 = require("./entities/order.entity");
 const encrypt_decrypt_1 = require("../encrypt_decrypt");
+const order_details_service_1 = require("../order_details/order_details.service");
+const items_service_1 = require("../items/items.service");
 let OrdersService = class OrdersService {
-    constructor(ordersRepository) {
+    constructor(ordersRepository, orderDetailsService, itemsService) {
         this.ordersRepository = ordersRepository;
+        this.orderDetailsService = orderDetailsService;
+        this.itemsService = itemsService;
     }
     async createOrder(createOrderDto) {
         createOrderDto.customer_id = +(await (0, encrypt_decrypt_1.decrypt)(JSON.parse(String(createOrderDto.customer_id))));
@@ -52,13 +56,19 @@ let OrdersService = class OrdersService {
         });
     }
     async update(id, updateOrderDto) {
+        const cart = await this.orderDetailsService.getOrderDetailsByOrderId(id);
+        for (const orderDetail of cart) {
+            await this.itemsService.updateQuantity(orderDetail.item_id, orderDetail.quantity);
+        }
         return await this.ordersRepository.update({ id }, updateOrderDto);
     }
 };
 OrdersService = __decorate([
     (0, common_1.Injectable)(),
     __param(0, (0, typeorm_1.InjectRepository)(order_entity_1.Orders)),
-    __metadata("design:paramtypes", [typeorm_2.Repository])
+    __metadata("design:paramtypes", [typeorm_2.Repository,
+        order_details_service_1.OrderDetailsService,
+        items_service_1.ItemsService])
 ], OrdersService);
 exports.OrdersService = OrdersService;
 //# sourceMappingURL=orders.service.js.map

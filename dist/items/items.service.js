@@ -30,6 +30,11 @@ let ItemsService = class ItemsService {
             where: [{ item_name: (0, typeorm_2.Like)(`%${searchValue}%`) }, { description: (0, typeorm_2.Like)(`%${searchValue}%`) }, { item_name: (0, typeorm_2.Like)(`%${searchValueCapitalize}%`) }, { description: (0, typeorm_2.Like)(`%${searchValueCapitalize}%`) }]
         });
     }
+    async updateQuantity(id, amount) {
+        const currentItem = await this.itemsRepository.findOne({ where: [{ id }] });
+        currentItem.units_in_stock = currentItem.units_in_stock - amount;
+        return await this.itemsRepository.save(currentItem);
+    }
     async getItem(_id) {
         return await this.itemsRepository.findOne({
             where: [{ id: _id }],

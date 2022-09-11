@@ -1,12 +1,13 @@
+/* eslint-disable prettier/prettier */
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Customers } from './entities/customers.entity';
 import { CreateCustomerDto } from './dto/create-customer.dto';
 import { UpdateCustomerDto } from './dto/update-customer.dto';
-import { createCipheriv, randomBytes, scrypt, createDecipheriv } from 'crypto';
-import { promisify } from 'util';
 import { decrypt, encrypt } from '../encrypt_decrypt';
+import * as bcrypt from 'bcrypt';
+const saltOrRounds = 10;
 
 @Injectable()
 export class CustomersService {
@@ -66,18 +67,30 @@ export class CustomersService {
       return { encryptedId };
     }
   }
+  async getCustomerDetailsWithPassword(_id): Promise<Customers> {
+    const decryptedText = await decrypt(JSON.parse(_id));
+
+    return await this.customerRepository.findOne({
+      select: ['password'],
+      where: [{ id: +decryptedText }],
+    });
+  }
 
   async updateCustomer(_id, updateCustomerDto: UpdateCustomerDto) {
     const id = +(await decrypt(JSON.parse(_id)));
     return await this.customerRepository.update({ id }, updateCustomerDto);
   }
+  async checkPassword(customer, password) {
+    return await bcrypt.compare(password, customer.password);
+  }
 
-  // async updateCustomerPassword(_id, oldPassword,newPassword ) {
-  //   const id = +(await decrypt(JSON.parse(_id)));
-  //   return await this.customerRepository.update({ id }, updateCustomerDto);
-  // }
-
-  // async deleteCustomer(customer: Customer) {
-  //   this.customerRepository.delete(customer);
-  // }
+  async updateCustomerPassword(_id, oldPassword, newPassword) {
+    const currentCusomter = await this.getCustomerDetailsWithPassword(_id);
+    if (this.checkPassword(currentCusomter, oldPassword)) {
+      currentCusomter.password = await bcrypt.hash(newPassword, saltOrRounds);
+      return await this.customerRepository.save(currentCusomter);
+    } else {
+      return { message: "Old Password doesn't match" };
+    }
+  }
 }

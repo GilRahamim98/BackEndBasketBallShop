@@ -24,6 +24,11 @@ export class ItemsService {
       where:[{item_name:Like(`%${searchValue}%`)},{description:Like(`%${searchValue}%`)},{item_name:Like(`%${searchValueCapitalize}%`)},{description:Like(`%${searchValueCapitalize}%`)}]
     })
   }
+  async updateQuantity(id:number,amount:number){
+    const currentItem=await this.itemsRepository.findOne({where:[{id}]})
+    currentItem.units_in_stock=currentItem.units_in_stock-amount
+    return await this.itemsRepository.save(currentItem)
+  }
 
   async getItem(_id: number): Promise<Items> {
     return await this.itemsRepository.findOne({

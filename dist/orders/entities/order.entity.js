@@ -9,24 +9,32 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ItemImage = void 0;
+exports.Orders = void 0;
 const typeorm_1 = require("typeorm");
-let ItemImage = class ItemImage {
+let Orders = class Orders {
 };
 __decorate([
     (0, typeorm_1.PrimaryGeneratedColumn)(),
     __metadata("design:type", Number)
-], ItemImage.prototype, "id", void 0);
+], Orders.prototype, "id", void 0);
 __decorate([
     (0, typeorm_1.Column)('int'),
     __metadata("design:type", Number)
-], ItemImage.prototype, "item_id", void 0);
+], Orders.prototype, "customer_id", void 0);
 __decorate([
-    (0, typeorm_1.Column)('varchar', { length: 200 }),
+    (0, typeorm_1.Column)('datetime', { nullable: true }),
     __metadata("design:type", String)
-], ItemImage.prototype, "image_src", void 0);
-ItemImage = __decorate([
+], Orders.prototype, "order_date", void 0);
+__decorate([
+    (0, typeorm_1.Column)('datetime', { nullable: true }),
+    __metadata("design:type", String)
+], Orders.prototype, "shipped_date", void 0);
+__decorate([
+    (0, typeorm_1.Column)('varchar', { length: 45 }),
+    __metadata("design:type", String)
+], Orders.prototype, "ship_address", void 0);
+Orders = __decorate([
     (0, typeorm_1.Entity)()
-], ItemImage);
-exports.ItemImage = ItemImage;
-//# sourceMappingURL=item_image.entity.js.map
+], Orders);
+exports.Orders = Orders;
+//# sourceMappingURL=order.entity.js.map

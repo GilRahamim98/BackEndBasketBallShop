@@ -30,11 +30,11 @@ __decorate([
     __metadata("design:type", String)
 ], Customers.prototype, "birth_day", void 0);
 __decorate([
-    (0, typeorm_1.Column)('varchar', { length: 30 }),
+    (0, typeorm_1.Column)('varchar', { length: 30, unique: true }),
     __metadata("design:type", String)
 ], Customers.prototype, "user_name", void 0);
 __decorate([
-    (0, typeorm_1.Column)('varchar', { length: 30 }),
+    (0, typeorm_1.Column)('varchar', { length: 30, unique: true }),
     __metadata("design:type", String)
 ], Customers.prototype, "email", void 0);
 __decorate([

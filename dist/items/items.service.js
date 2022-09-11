@@ -25,7 +25,7 @@ let ItemsService = class ItemsService {
         return await this.itemsRepository.find();
     }
     async getItem(_id) {
-        return await this.itemsRepository.find({
+        return await this.itemsRepository.findOne({
             where: [{ id: _id }],
         });
     }

@@ -25,8 +25,15 @@ let CustomersService = class CustomersService {
     getCustomers() {
         return this.customerRepository.find();
     }
+    async getStreet(_id) {
+        const decryptedText = await (0, encrypt_decrypt_1.decrypt)(JSON.parse(_id));
+        return await this.customerRepository.findOne({
+            select: ['street', 'city'],
+            where: [{ id: +decryptedText }],
+        });
+    }
     async getCustomer(_id) {
-        const decryptedText = await (0, encrypt_decrypt_1.decrypt)(_id);
+        const decryptedText = await (0, encrypt_decrypt_1.decrypt)(JSON.parse(_id));
         return await this.customerRepository.find({
             select: [
                 'first_name',
@@ -42,14 +49,32 @@ let CustomersService = class CustomersService {
         });
     }
     async getCustomerByUsername(username) {
-        return await this.customerRepository.find({
+        return await this.customerRepository.findOne({
             select: ['id', 'user_name', 'password'],
             where: [{ user_name: username }],
         });
     }
-    createCustomer(createCustomerDto) {
-        const newCustomer = this.customerRepository.create(createCustomerDto);
-        return this.customerRepository.save(newCustomer);
+    async createCustomer(createCustomerDto) {
+        const username = await this.getCustomerByUsername(createCustomerDto.user_name);
+        const email = await this.customerRepository.find({
+            where: [{ email: createCustomerDto.email }],
+        });
+        if (email.length > 0) {
+            return { message: 'This email is already in use!' };
+        }
+        else if (username !== null) {
+            return { message: 'This username is already in use!' };
+        }
+        else {
+            const newCustomer = this.customerRepository.create(createCustomerDto);
+            this.customerRepository.save(newCustomer);
+            const encryptedId = await (0, encrypt_decrypt_1.encrypt)(String(newCustomer.id));
+            return { encryptedId };
+        }
+    }
+    async updateCustomer(_id, updateCustomerDto) {
+        const id = +(await (0, encrypt_decrypt_1.decrypt)(JSON.parse(_id)));
+        return await this.customerRepository.update({ id }, updateCustomerDto);
     }
 };
 CustomersService = __decorate([

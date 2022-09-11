@@ -15,6 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.CustomersController = void 0;
 const common_1 = require("@nestjs/common");
 const customers_service_1 = require("./customers.service");
+const update_customer_dto_1 = require("./dto/update-customer.dto");
 let CustomersController = class CustomersController {
     constructor(customersService) {
         this.customersService = customersService;
@@ -24,6 +25,12 @@ let CustomersController = class CustomersController {
     }
     findOne(id) {
         return this.customersService.getCustomer(id);
+    }
+    getCusomterStreet(id) {
+        return this.customersService.getStreet(id);
+    }
+    updateCustomer(id, updateCustomerDto) {
+        return this.customersService.updateCustomer(id, updateCustomerDto);
     }
 };
 __decorate([
@@ -36,9 +43,24 @@ __decorate([
     (0, common_1.Get)(':id'),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
+    __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", void 0)
 ], CustomersController.prototype, "findOne", null);
+__decorate([
+    (0, common_1.Get)('/street/:id'),
+    __param(0, (0, common_1.Param)('id')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", void 0)
+], CustomersController.prototype, "getCusomterStreet", null);
+__decorate([
+    (0, common_1.Put)(':id'),
+    __param(0, (0, common_1.Param)('id')),
+    __param(1, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, update_customer_dto_1.UpdateCustomerDto]),
+    __metadata("design:returntype", void 0)
+], CustomersController.prototype, "updateCustomer", null);
 CustomersController = __decorate([
     (0, common_1.Controller)('customers'),
     __metadata("design:paramtypes", [customers_service_1.CustomersService])

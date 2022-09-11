@@ -3,5 +3,5 @@ export declare class CategoriesController {
     private readonly categoriesService;
     constructor(categoriesService: CategoriesService);
     findAll(): Promise<import("./entities/category.entity").Category[]>;
-    findOne(id: string): any;
+    findOne(id: string): Promise<import("../items/entities/items.entity").Items[]>;
 }

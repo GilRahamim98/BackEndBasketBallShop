@@ -32,6 +32,9 @@ let CustomersController = class CustomersController {
     updateCustomer(id, updateCustomerDto) {
         return this.customersService.updateCustomer(id, updateCustomerDto);
     }
+    updatePassword(id, password) {
+        return this.customersService.updateCustomerPassword(id, password.oldPassword, password.newPassword);
+    }
 };
 __decorate([
     (0, common_1.Get)(),
@@ -61,6 +64,14 @@ __decorate([
     __metadata("design:paramtypes", [Object, update_customer_dto_1.UpdateCustomerDto]),
     __metadata("design:returntype", void 0)
 ], CustomersController.prototype, "updateCustomer", null);
+__decorate([
+    (0, common_1.Put)('/changePassword/:id'),
+    __param(0, (0, common_1.Param)('id')),
+    __param(1, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, Object]),
+    __metadata("design:returntype", void 0)
+], CustomersController.prototype, "updatePassword", null);
 CustomersController = __decorate([
     (0, common_1.Controller)('customers'),
     __metadata("design:paramtypes", [customers_service_1.CustomersService])

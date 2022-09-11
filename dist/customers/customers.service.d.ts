@@ -19,5 +19,10 @@ export declare class CustomersService {
         };
         message?: undefined;
     }>;
+    getCustomerDetailsWithPassword(_id: any): Promise<Customers>;
     updateCustomer(_id: any, updateCustomerDto: UpdateCustomerDto): Promise<import("typeorm").UpdateResult>;
+    checkPassword(customer: any, password: any): Promise<boolean>;
+    updateCustomerPassword(_id: any, oldPassword: any, newPassword: any): Promise<Customers | {
+        message: string;
+    }>;
 }

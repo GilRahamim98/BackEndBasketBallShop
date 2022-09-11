@@ -18,6 +18,8 @@ const typeorm_1 = require("@nestjs/typeorm");
 const typeorm_2 = require("typeorm");
 const customers_entity_1 = require("./entities/customers.entity");
 const encrypt_decrypt_1 = require("../encrypt_decrypt");
+const bcrypt = require("bcrypt");
+const saltOrRounds = 10;
 let CustomersService = class CustomersService {
     constructor(customerRepository) {
         this.customerRepository = customerRepository;
@@ -72,9 +74,29 @@ let CustomersService = class CustomersService {
             return { encryptedId };
         }
     }
+    async getCustomerDetailsWithPassword(_id) {
+        const decryptedText = await (0, encrypt_decrypt_1.decrypt)(JSON.parse(_id));
+        return await this.customerRepository.findOne({
+            select: ['password'],
+            where: [{ id: +decryptedText }],
+        });
+    }
     async updateCustomer(_id, updateCustomerDto) {
         const id = +(await (0, encrypt_decrypt_1.decrypt)(JSON.parse(_id)));
         return await this.customerRepository.update({ id }, updateCustomerDto);
+    }
+    async checkPassword(customer, password) {
+        return await bcrypt.compare(password, customer.password);
+    }
+    async updateCustomerPassword(_id, oldPassword, newPassword) {
+        const currentCusomter = await this.getCustomerDetailsWithPassword(_id);
+        if (this.checkPassword(currentCusomter, oldPassword)) {
+            currentCusomter.password = await bcrypt.hash(newPassword, saltOrRounds);
+            return await this.customerRepository.save(currentCusomter);
+        }
+        else {
+            return { message: "Old Password doesn't match" };
+        }
     }
 };
 CustomersService = __decorate([

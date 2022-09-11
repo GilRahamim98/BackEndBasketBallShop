@@ -72,6 +72,11 @@ export class CustomersService {
     return await this.customerRepository.update({ id }, updateCustomerDto);
   }
 
+  // async updateCustomerPassword(_id, oldPassword,newPassword ) {
+  //   const id = +(await decrypt(JSON.parse(_id)));
+  //   return await this.customerRepository.update({ id }, updateCustomerDto);
+  // }
+
   // async deleteCustomer(customer: Customer) {
   //   this.customerRepository.delete(customer);
   // }

@@ -19,6 +19,7 @@ OrderDetailsModule = __decorate([
         imports: [typeorm_1.TypeOrmModule.forFeature([order_detail_entity_1.Order_Details])],
         controllers: [order_details_controller_1.OrderDetailsController],
         providers: [order_details_service_1.OrderDetailsService],
+        exports: [order_details_service_1.OrderDetailsService],
     })
 ], OrderDetailsModule);
 exports.OrderDetailsModule = OrderDetailsModule;

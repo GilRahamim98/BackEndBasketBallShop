@@ -4,6 +4,7 @@ export declare class ItemsService {
     private itemsRepository;
     constructor(itemsRepository: Repository<Items>);
     getItems(): Promise<Items[]>;
+    getItemsWithSearch(searchValue: string): Promise<Items[]>;
     getItem(_id: number): Promise<Items>;
     getItemByCategory(_id: number): Promise<Items[]>;
 }

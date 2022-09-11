@@ -22,6 +22,9 @@ let ItemsController = class ItemsController {
     findAll() {
         return this.itemsService.getItems();
     }
+    findSearched(searchValue) {
+        return this.itemsService.getItemsWithSearch(searchValue);
+    }
     findOne(id) {
         return this.itemsService.getItem(+id);
     }
@@ -32,6 +35,13 @@ __decorate([
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
 ], ItemsController.prototype, "findAll", null);
+__decorate([
+    (0, common_1.Get)('search'),
+    __param(0, (0, common_1.Query)('Search')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", Promise)
+], ItemsController.prototype, "findSearched", null);
 __decorate([
     (0, common_1.Get)(':id'),
     __param(0, (0, common_1.Param)('id')),

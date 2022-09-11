@@ -24,6 +24,12 @@ let ItemsService = class ItemsService {
     async getItems() {
         return await this.itemsRepository.find();
     }
+    async getItemsWithSearch(searchValue) {
+        const searchValueCapitalize = searchValue.replace('"', "").charAt(0).toUpperCase() + searchValue.replace('"', "").slice(1).replace('"', "");
+        return await this.itemsRepository.find({
+            where: [{ item_name: (0, typeorm_2.Like)(`%${searchValue}%`) }, { description: (0, typeorm_2.Like)(`%${searchValue}%`) }, { item_name: (0, typeorm_2.Like)(`%${searchValueCapitalize}%`) }, { description: (0, typeorm_2.Like)(`%${searchValueCapitalize}%`) }]
+        });
+    }
     async getItem(_id) {
         return await this.itemsRepository.findOne({
             where: [{ id: _id }],

@@ -37,4 +37,12 @@ export class CustomersController {
   ) {
     return this.customersService.updateCustomer(id, updateCustomerDto);
   }
+  @Put('/changePassword/:id')
+  updatePassword(@Param('id') id, @Body() password) {
+    return this.customersService.updateCustomerPassword(
+      id,
+      password.oldPassword,
+      password.newPassword,
+    );
+  }
 }

@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import {
   Controller,
   Get,
@@ -39,10 +40,6 @@ export class CustomersController {
   }
   @Put('/changePassword/:id')
   updatePassword(@Param('id') id, @Body() password) {
-    return this.customersService.updateCustomerPassword(
-      id,
-      password.oldPassword,
-      password.newPassword,
-    );
+    return this.customersService.updateCustomerPassword(id, password);
   }
 }

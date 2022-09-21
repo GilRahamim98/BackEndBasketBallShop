@@ -71,7 +71,6 @@ export class CustomersService {
     const decryptedText = await decrypt(JSON.parse(_id));
 
     return await this.customerRepository.findOne({
-      select: ['password'],
       where: [{ id: +decryptedText }],
     });
   }
@@ -84,11 +83,15 @@ export class CustomersService {
     return await bcrypt.compare(password, customer.password);
   }
 
-  async updateCustomerPassword(_id, oldPassword, newPassword) {
-    const currentCusomter = await this.getCustomerDetailsWithPassword(_id);
-    if (this.checkPassword(currentCusomter, oldPassword)) {
-      currentCusomter.password = await bcrypt.hash(newPassword, saltOrRounds);
-      return await this.customerRepository.save(currentCusomter);
+  async updateCustomerPassword(_id, password) {
+    const currentCustomer = await this.getCustomerDetailsWithPassword(_id);
+    if (await this.checkPassword(currentCustomer,password.password.oldPassword)) {
+      if(password.password.oldPassword===password.password.newPassword){
+        return { message: "New Password can not be like the Old Password " }
+      }
+      currentCustomer.password = await bcrypt.hash(password.password.newPassword, saltOrRounds);
+       await this.customerRepository.save(currentCustomer);
+       return {goodMessage:"Good"}
     } else {
       return { message: "Old Password doesn't match" };
     }

@@ -68,8 +68,8 @@ let CustomersService = class CustomersService {
             return { message: 'This username is already in use!' };
         }
         else {
-            const newCustomer = this.customerRepository.create(createCustomerDto);
-            this.customerRepository.save(newCustomer);
+            const newUser = await this.customerRepository.create(createCustomerDto);
+            const newCustomer = await this.customerRepository.save(newUser);
             const encryptedId = await (0, encrypt_decrypt_1.encrypt)(String(newCustomer.id));
             return { encryptedId };
         }

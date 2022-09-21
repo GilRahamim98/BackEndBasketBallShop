@@ -61,8 +61,8 @@ export class CustomersService {
     } else if (username !== null) {
       return { message: 'This username is already in use!' };
     } else {
-      const newCustomer = this.customerRepository.create(createCustomerDto);
-      this.customerRepository.save(newCustomer);
+      const newUser =await  this.customerRepository.create(createCustomerDto);
+      const newCustomer=await this.customerRepository.save(newUser);
       const encryptedId = await encrypt(String(newCustomer.id));
       return { encryptedId };
     }

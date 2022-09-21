@@ -7,7 +7,11 @@ export declare class CustomersController {
     findOne(id: string): Promise<import("./entities/customers.entity").Customers[]>;
     getCusomterStreet(id: string): Promise<import("./entities/customers.entity").Customers>;
     updateCustomer(id: any, updateCustomerDto: UpdateCustomerDto): Promise<import("typeorm").UpdateResult>;
-    updatePassword(id: any, password: any): Promise<import("./entities/customers.entity").Customers | {
+    updatePassword(id: any, password: any): Promise<{
         message: string;
+        goodMessage?: undefined;
+    } | {
+        goodMessage: string;
+        message?: undefined;
     }>;
 }

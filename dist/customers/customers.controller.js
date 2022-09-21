@@ -33,7 +33,7 @@ let CustomersController = class CustomersController {
         return this.customersService.updateCustomer(id, updateCustomerDto);
     }
     updatePassword(id, password) {
-        return this.customersService.updateCustomerPassword(id, password.oldPassword, password.newPassword);
+        return this.customersService.updateCustomerPassword(id, password);
     }
 };
 __decorate([

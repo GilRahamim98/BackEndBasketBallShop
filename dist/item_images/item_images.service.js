@@ -24,11 +24,6 @@ let ItemImagesService = class ItemImagesService {
     async getItems() {
         return await this.itemImageRepository.find();
     }
-    async getItemImages(_id) {
-        return await this.itemImageRepository.find({
-            where: [{ item_id: _id }],
-        });
-    }
 };
 ItemImagesService = __decorate([
     (0, common_1.Injectable)(),

@@ -10,6 +10,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Item_Images = void 0;
+const items_entity_1 = require("../../items/entities/items.entity");
 const typeorm_1 = require("typeorm");
 let Item_Images = class Item_Images {
 };
@@ -18,9 +19,9 @@ __decorate([
     __metadata("design:type", Number)
 ], Item_Images.prototype, "id", void 0);
 __decorate([
-    (0, typeorm_1.Column)('int'),
-    __metadata("design:type", Number)
-], Item_Images.prototype, "item_id", void 0);
+    (0, typeorm_1.ManyToOne)(() => items_entity_1.Items, (item) => item.images),
+    __metadata("design:type", items_entity_1.Items)
+], Item_Images.prototype, "item_", void 0);
 __decorate([
     (0, typeorm_1.Column)('varchar', { length: 300 }),
     __metadata("design:type", String)

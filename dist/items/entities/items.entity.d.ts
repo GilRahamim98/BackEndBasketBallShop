@@ -1,3 +1,4 @@
+import { Item_Images } from '../../item_images/entities/item_images.entity';
 export declare class Items {
     id: number;
     item_name: string;
@@ -5,4 +6,5 @@ export declare class Items {
     description: string;
     unit_price: number;
     units_in_stock: number;
+    images: Item_Images[];
 }

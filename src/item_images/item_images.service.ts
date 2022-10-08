@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { Injectable, Inject } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -16,9 +17,9 @@ export class ItemImagesService {
     return await this.itemImageRepository.find();
   }
 
-  async getItemImages(_id: number): Promise<Item_Images[]> {
-    return await this.itemImageRepository.find({
-      where: [{ item_id: _id }],
-    });
-  }
+  // async getItemImages(_id: number): Promise<Item_Images[]> {
+  //   return await this.itemImageRepository.find({
+  //     where: [{ item_id: _id }],
+  //   });
+  // }
 }

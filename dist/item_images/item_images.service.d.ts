@@ -4,5 +4,4 @@ export declare class ItemImagesService {
     private itemImageRepository;
     constructor(itemImageRepository: Repository<Item_Images>);
     getItems(): Promise<Item_Images[]>;
-    getItemImages(_id: number): Promise<Item_Images[]>;
 }

@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import {
   Controller,
   Get,
@@ -31,4 +32,9 @@ export class ItemsController {
   findOne(@Param('id') id: string) {
     return this.itemsService.getItem(+id);
   }
+  // @Get('img/:id')
+  // getImages(@Param('id') id: string) {
+ 
+  //   return this.itemsService.getItemImages(+id);
+  // }
 }

@@ -22,7 +22,9 @@ let ItemsService = class ItemsService {
         this.itemsRepository = itemsRepository;
     }
     async getItems() {
-        return await this.itemsRepository.find();
+        return await this.itemsRepository.find({
+            relations: ['images'],
+        });
     }
     async getItemsWithSearch(searchValue) {
         const searchValueCapitalize = searchValue.replace('"', "").charAt(0).toUpperCase() + searchValue.replace('"', "").slice(1).replace('"', "");
@@ -35,15 +37,18 @@ let ItemsService = class ItemsService {
         currentItem.units_in_stock = currentItem.units_in_stock - amount;
         return await this.itemsRepository.save(currentItem);
     }
-    async getItem(_id) {
-        return await this.itemsRepository.findOne({
-            where: [{ id: _id }],
-        });
-    }
     async getItemByCategory(_id) {
         return await this.itemsRepository.find({
             where: [{ category_id: _id }],
+            relations: ['images'],
         });
+    }
+    async getItem(_id) {
+        const item = await this.itemsRepository.findOne({
+            where: { id: _id },
+            relations: ['images'],
+        });
+        return item;
     }
 };
 ItemsService = __decorate([

@@ -1,5 +1,6 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
-
+/* eslint-disable prettier/prettier */
+import { Item_Images } from '../../item_images/entities/item_images.entity';
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 @Entity()
 export class Items {
   @PrimaryGeneratedColumn()
@@ -19,4 +20,7 @@ export class Items {
 
   @Column('smallint')
   units_in_stock: number;
+
+  @OneToMany(()=>Item_Images,(img)=>img.item_)
+  images:Item_Images[]
 }

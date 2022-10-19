@@ -20,8 +20,8 @@ export class ItemImagesController {
     return this.itemImagesService.getItems();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.itemImagesService.getItemImages(+id);
-  }
+  // @Get(':id')
+  // findOne(@Param('id') id: string) {
+  //   return this.itemImagesService.getItemImages(+id);
+  // }
 }

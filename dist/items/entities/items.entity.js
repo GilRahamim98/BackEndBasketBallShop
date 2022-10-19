@@ -10,6 +10,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Items = void 0;
+const item_images_entity_1 = require("../../item_images/entities/item_images.entity");
 const typeorm_1 = require("typeorm");
 let Items = class Items {
 };
@@ -37,6 +38,10 @@ __decorate([
     (0, typeorm_1.Column)('smallint'),
     __metadata("design:type", Number)
 ], Items.prototype, "units_in_stock", void 0);
+__decorate([
+    (0, typeorm_1.OneToMany)(() => item_images_entity_1.Item_Images, (img) => img.item_),
+    __metadata("design:type", Array)
+], Items.prototype, "images", void 0);
 Items = __decorate([
     (0, typeorm_1.Entity)()
 ], Items);

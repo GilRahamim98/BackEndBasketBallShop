@@ -24,7 +24,9 @@ export class ItemsService {
     
     
     return await this.itemsRepository.find({
-      where:[{item_name:Like(`%${searchValue}%`)},{description:Like(`%${searchValue}%`)},{item_name:Like(`%${searchValueCapitalize}%`)},{description:Like(`%${searchValueCapitalize}%`)}]
+      where:[{item_name:Like(`%${searchValue}%`)},{description:Like(`%${searchValue}%`)},{item_name:Like(`%${searchValueCapitalize}%`)},{description:Like(`%${searchValueCapitalize}%`)}],
+      relations:['images'],
+
     })
   }
   async updateQuantity(id:number,amount:number){

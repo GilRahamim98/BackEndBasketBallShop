@@ -29,7 +29,8 @@ let ItemsService = class ItemsService {
     async getItemsWithSearch(searchValue) {
         const searchValueCapitalize = searchValue.replace('"', "").charAt(0).toUpperCase() + searchValue.replace('"', "").slice(1).replace('"', "");
         return await this.itemsRepository.find({
-            where: [{ item_name: (0, typeorm_2.Like)(`%${searchValue}%`) }, { description: (0, typeorm_2.Like)(`%${searchValue}%`) }, { item_name: (0, typeorm_2.Like)(`%${searchValueCapitalize}%`) }, { description: (0, typeorm_2.Like)(`%${searchValueCapitalize}%`) }]
+            where: [{ item_name: (0, typeorm_2.Like)(`%${searchValue}%`) }, { description: (0, typeorm_2.Like)(`%${searchValue}%`) }, { item_name: (0, typeorm_2.Like)(`%${searchValueCapitalize}%`) }, { description: (0, typeorm_2.Like)(`%${searchValueCapitalize}%`) }],
+            relations: ['images'],
         });
     }
     async updateQuantity(id, amount) {

@@ -32,11 +32,11 @@ AppModule = __decorate([
         imports: [
             typeorm_1.TypeOrmModule.forRoot({
                 type: 'mysql',
-                host: 'localhost',
+                host: 'sql12.freesqldatabase.com',
                 port: 3306,
-                username: 'root',
-                password: 'dhk1998rjnho!R',
-                database: 'onlineshop',
+                username: 'sql12536101',
+                password: '4UJJM6fIim',
+                database: 'sql12536101',
                 entities: [
                     customers_entity_1.Customers,
                     items_entity_1.Items,
